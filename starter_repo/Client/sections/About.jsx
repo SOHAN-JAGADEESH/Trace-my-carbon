@@ -9,6 +9,7 @@ const About = () => {
   const [bills, setBills] = useState({
     gas: '',
     electricity: '',
+    postcode: '',
   });
 
   const [carbonFootprint, setCarbonFootprint] = useState(null);
@@ -45,6 +46,7 @@ const About = () => {
 
     const gasFootprint = bills.gas * gasEmissionsFactor;
     const electricityFootprint = bills.electricity * electricityEmissionsFactor;
+    const { gas, electricity, postcode } = bills;
 
     const totalFootprint = gasFootprint + electricityFootprint;
     setCarbonFootprint(totalFootprint);
@@ -61,6 +63,29 @@ const About = () => {
         },
       ],
     });
+
+    fetch('http://localhost:8080/api/compareFootprint', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      gasBill: bills.gas,
+      electricityBill: bills.electricity,
+      postcode: bills.postcode,
+    }),
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    // Handle the data returned from the backend here
+    // For example, you can update the state with the data to render the bar chart in the Explore section
+  })
+  .catch(error => {
+    console.error('There was an error sending the data to the backend:', error);
+  });
+
+
 
     // Reset the form if needed.
     setBills({ gas: '', electricity: '' });
@@ -85,6 +110,18 @@ const About = () => {
         <form onSubmit={handleSubmit}>
         <h2 className="text-2xl font-semibold mb-4 text-white" >Calculate Your Carbon Footprint</h2>
         <p className='text-white'>Enter your monthly gas and electricity bills to estimate your carbon footprint.</p>
+        <div className="mt-4">
+          <label htmlFor="postcode" className="block text-sm font-medium text-gray-700">Postcode:</label>
+          <input
+            type="text"
+            name="postcode"
+            id="postcode"
+            value={bills.postcode}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md"
+            placeholder="Enter your postcode"
+          />
+        </div>
         <div className="mt-4">
           <label htmlFor="gas" className="block text-sm font-medium text-gray-700">Gas Bills:</label>
           <input
