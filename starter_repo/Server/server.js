@@ -4,6 +4,7 @@ const PORT = 8080;
 const cors = require("cors");
 
 app.use(cors());
+app.use(express.json());
 
 const mysql = require('mysql');
 
@@ -16,17 +17,6 @@ const connection = mysql.createConnection({
 
 connection.connect();
 
-connection.query(
-    `CREATE TABLE IF NOT EXISTS neighborhood (
-      id INT PRIMARY KEY AUTO_INCREMENT,
-      postcode VARCHAR(255),
-      avg_gas_bill DECIMAL(10, 2),
-      avg_electricity_bill DECIMAL(10, 2)
-    )`,
-    (error) => {
-      if (error) throw error;
-    }
-  );
 
 const gasEmissionsFactor = 0.006; // kg CO2 per dollar spent
 const electricityEmissionsFactor = 0.005; // kg CO2 per dollar spent

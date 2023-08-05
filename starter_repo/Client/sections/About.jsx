@@ -77,9 +77,13 @@ const About = () => {
   })
   .then(response => response.json())
   .then(data => {
-    console.log(data);
-    // Handle the data returned from the backend here
-    // For example, you can update the state with the data to render the bar chart in the Explore section
+    const userEmissions = data.user;
+    const neighborhoodEmissions = data.neighborhood;
+
+    // Save the data to the state or pass it to the Explore section as needed
+    // e.g., setNeighborhoodEmissions(neighborhoodEmissions);
+
+    console.log('User:', userEmissions, 'Neighborhood:', neighborhoodEmissions);
   })
   .catch(error => {
     console.error('There was an error sending the data to the backend:', error);
