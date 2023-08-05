@@ -132,6 +132,16 @@ const About = () => {
         className={`${styles.innerWidth} mx-auto ${styles.flexCenter} flex-col`}
         
       >
+        <div className="video-container">
+        <iframe width="1260" 
+        height="515" 
+        src="https://www.youtube.com/embed/aCu9rZvXRLg" 
+        title="Carbon Footprint" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+        </iframe>
+        </div>
         <img 
         src="/logo1.svg"
         alt="menu"

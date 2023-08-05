@@ -13,7 +13,7 @@ const Hero = () => (
       whileInView="show"
       viewport={{once:false}}
       className={`${styles.innerWidth} mx-auto flex flex-col`}
-      style={{height: '100vh'}}
+      style={{height: '95vh'}}
       
     >
       <div className='flex justify-center items-center flex-col relative z-10 pl-8 '>
