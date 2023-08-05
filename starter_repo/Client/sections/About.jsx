@@ -14,7 +14,10 @@ const About = () => {
 
   const [carbonFootprint, setCarbonFootprint] = useState(null);
   const [pieData, setPieData] = useState(null);
+  const [barData, setBarData] = useState(null);
+  const [showComparison, setShowComparison] = useState(false);
   const pieRef = useRef(null);
+  const barRef = useRef(null);
   const chartRef = useRef(null);
 
   //change the lifecycle of the entire thing
@@ -28,6 +31,15 @@ const About = () => {
       });
     }
   }, [pieData]);
+
+  useEffect(() => {
+    if (barData && barRef.current && showComparison) {
+      new Chart(barRef.current, {
+        type: 'bar',
+        data: barData,
+      });
+    }
+  }, [barData, showComparison]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -80,6 +92,16 @@ const About = () => {
     const userEmissions = data.user;
     const neighborhoodEmissions = data.neighborhood;
 
+    setBarData({
+      labels: ['User', 'Neighborhood'],
+      datasets: [
+        {
+          data: [userEmissions, neighborhoodEmissions],
+          backgroundColor: ['#FF5733', '#33FF57'],
+        },
+      ],
+    });
+
     // Save the data to the state or pass it to the Explore section as needed
     // e.g., setNeighborhoodEmissions(neighborhoodEmissions);
 
@@ -92,11 +114,15 @@ const About = () => {
 
 
     // Reset the form if needed.
-    setBills({ gas: '', electricity: '' });
+    setBills({ gas: '', electricity: '', postcode: '' });
+  };
+
+  const handleCompare = () => {
+    setShowComparison(true);
   };
 
   return (
-    <section className={`${styles.paddings} relative z-10 flex flex-col justify-center items-center`}style={{height: '100vh'}}>
+    <section className={`${styles.paddings} relative z-10 flex flex-col justify-center items-center`}style={{height: '200vh'}}>
       <div className="gradient-02 z-0" />
       <motion.div
         variants={staggerContainer}
@@ -163,6 +189,17 @@ const About = () => {
           <div className="mt-4">
             <canvas ref={pieRef}></canvas>
           </div>
+          <p className="mt-4">
+            You can compare your carbon footprint with your neighbors
+          </p>
+          <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleCompare}>
+            Compare
+          </button>
+          {showComparison && (
+            <div className="mt-4">
+              <canvas ref={barRef}></canvas>
+            </div>
+          )}
         </>
         )}
       </motion.div>
