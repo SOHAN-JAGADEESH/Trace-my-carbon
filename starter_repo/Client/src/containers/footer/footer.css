@@ -1,0 +1,36 @@
+.footer 
+    {
+        display: flex;
+        flex-direction: column;
+    
+        padding: 2rem;
+        background: var(--color-footer);
+    
+        /* global 94%+ browsers support */
+        background: linear-gradient(180deg, rgba(0, 0, 0, 1) 86%, rgba(82, 169, 64, 1) 100%);
+        filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+        justify-content: space-between;
+        align-items: center;
+    
+        margin: 4rem 0 2rem;
+    }
+
+.carbon__compare-heading{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    
+    margin: 4rem 0 2rem;
+}
+
+.compare-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: #04f600;
+    color: #fff;
+    cursor: pointer;
+}
